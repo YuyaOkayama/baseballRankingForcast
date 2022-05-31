@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+  <meta charset="UTF-8">
+  <title>毎月順位予想</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+  <script type="text/javascript">
+    var source;
+
+    function dragStarted(evt) {
+      source = evt.target;
+      evt.dataTransfer.setData("text/plain", evt.target.innerHTML);
+      evt.dataTransfer.effectAllowed = "move";
+    }
+
+    function draggingOver(evt) {
+      evt.preventDefault();
+      evt.dataTransfer.dropEffect = "move";
+    }
+
+    function dropped(evt) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      source.innerHTML = evt.target.innerHTML;
+      evt.target.innerHTML = evt.dataTransfer.getData("text/plain");
+    }
+
+    function onButtonClickSava() {
+        //HTML内に画像を表示
+        html2canvas(document.getElementById("target"),{
+            onrendered: function(canvas){
+            //imgタグのsrcの中に、html2canvasがレンダリングした画像を指定する。
+            var imgData = canvas.toDataURL();
+            document.getElementById("result").src = imgData;
+            }
+        });
+
+        //ボタンを押下した際にダウンロードする画像を作る
+        html2canvas(document.getElementById("target"),{
+            onrendered: function(canvas){
+            //aタグのhrefにキャプチャ画像のURLを設定
+            var imgData = canvas.toDataURL();
+            document.getElementById("ss").href = imgData;
+            }
+        });
+    }
+
+    function onButtonClickSavaP() {
+        //HTML内に画像を表示
+        html2canvas(document.getElementById("target_p"),{
+            onrendered: function(canvas){
+            //imgタグのsrcの中に、html2canvasがレンダリングした画像を指定する。
+            var imgData = canvas.toDataURL();
+            document.getElementById("result_p").src = imgData;
+            }
+        });
+
+        //ボタンを押下した際にダウンロードする画像を作る
+        html2canvas(document.getElementById("target_p"),{
+            onrendered: function(canvas){
+            //aタグのhrefにキャプチャ画像のURLを設定
+            var imgData = canvas.toDataURL();
+            document.getElementById("ss_p").href = imgData;
+            }
+        });
+    }
+  </script>
+  <h1>プロ野球 毎月順位予想</h1>
+</head>
+<body>
+    <h2>毎月の順位予想を記録して、シーズン終了後に振り返りましょう</h2>
+    <div class="tabs">
+        <input id="central" type="radio" name="tab_item" checked>
+        <label class="tab_item" for="central">セ・リーグ</label>
+        <input id="pacific" type="radio" name="tab_item">
+        <label class="tab_item" for="pacific">パ・リーグ</label>
+        <div class="tab_content" id="central_content">
+            <div class="tab_content_description">
+                <div id="target">
+                    <select name="month">
+                        <option value="feb">2月</option>
+                        <option value="mar">3月</option>
+                        <option value="apr">4月</option>
+                        <option value="may">5月</option>
+                        <option value="jun">6月</option>
+                        <option value="jul">7月</option>
+                        <option value="aug">8月</option>
+                        <option value="sep">9月</option>
+                    </select>
+                    <ul>
+                        <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">東京ヤクルトスワローズ</li>
+                        <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">阪神タイガース</li>
+                        <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">読売ジャイアンツ</li>
+                        <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">広島東洋カープ</li>
+                        <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">中日ドラゴンズ</li>
+                        <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">横浜DeNAベイスターズ</li>
+                    </ul>
+                </div>
+                <input type="button" value="確定" onclick="onButtonClickSava()" />
+                <hr>
+                <img src="" id="result" />
+                <a href="" id="ss" download="html_ss.png">確定した順位を保存</a>
+            </div>
+        </div>
+        <div class="tab_content" id="pacific_content">
+            <div class="tab_content_description">
+                <div id="target_p">
+                    <select name="month">
+                        <option value="feb">2月</option>
+                        <option value="mar">3月</option>
+                        <option value="apr">4月</option>
+                        <option value="may">5月</option>
+                        <option value="jun">6月</option>
+                        <option value="jul">7月</option>
+                        <option value="aug">8月</option>
+                        <option value="sep">9月</option>
+                    </select>
+                    <ul>
+                        <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">オリックス・バファローズ</li>
+                        <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">千葉ロッテマリーンズ</li>
+                        <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">東北楽天ゴールデンイーグルス</li>
+                        <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">福岡ソフトバンクホークス</li>
+                        <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">北海道日本ハムファイターズ</li>
+                        <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">埼玉西武ライオンズ</li>
+                    </ul>
+                </div>
+                <input type="button" value="確定" onclick="onButtonClickSavaP()" />
+                <hr>
+                <img src="" id="result_p" />
+                <a href="" id="ss_p" download="html_ss.png">確定した順位を保存</a>
+            </div>
+        </div>
+</body>
+</html>
